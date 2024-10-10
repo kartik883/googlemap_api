@@ -23,7 +23,18 @@ class _HomepageState extends State<Homepage> {
     Marker(
       markerId: MarkerId('1'),
       position: LatLng(28.704060, 77.102493),
-    )
+      infoWindow: InfoWindow(title: 'my locaation'),
+    ),
+    Marker(
+      markerId: MarkerId('2'),
+      position: LatLng(28.696369, 77.091537),
+      infoWindow: InfoWindow(title: 'mangolpuri'),
+    ),
+    Marker(
+      markerId: MarkerId('3'),
+      position: LatLng(35.689487, 139.691711),
+      infoWindow: InfoWindow(title: 'tokyo'),
+    ),
   ];
 
   @override
@@ -41,12 +52,27 @@ class _HomepageState extends State<Homepage> {
           backgroundColor: Colors.blueAccent,
           title: const Text('HomePage'),
         ),
-        body: GoogleMap(
-          initialCameraPosition: gmap,
-          onMapCreated: (GoogleMapController controler) {
-            _controoler.complete(controler);
+        body: SafeArea(
+          child: GoogleMap(
+            initialCameraPosition: gmap,
+            onMapCreated: (GoogleMapController controler) {
+              _controoler.complete(controler);
+            },
+            markers: Set<Marker>.of(_marker),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            GoogleMapController controller = await _controoler.future;
+            controller.animateCamera(CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: LatLng(35.689487, 139.691711),
+                zoom: 14,
+              ),
+            ));
+            setState(() {});
           },
-          markers: Set<Marker>.of(_marker),
+          child: Icon(Icons.location_disabled_outlined),
         ),
       ),
     );
