@@ -30,7 +30,7 @@ class _converttoadressState extends State<converttoadress> {
                 setState(() {
                   adress = placemarks.first.toString() +
                       placemarks.single.toString() +
-                      placemarks.reversed.last.locality.toString();
+                      placemarks.reversed.last.locality .toString();
                 });
               },
               child: Container(
